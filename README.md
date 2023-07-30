@@ -1,1 +1,0 @@
-# homework-group-30
