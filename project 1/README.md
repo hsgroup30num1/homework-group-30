@@ -12,7 +12,6 @@ SM3密码杂凑算法是中国国家密码管理局在2010年公布的中国商�
 实验代码以前n比特为例来寻找碰撞并计算成功率。
 分别取8比特、16比特、32比特进行实验。<br>
 ## 三、运行结果
-![]
-(https://github.com/hsgroup30num1/homework-group-30/blob/main/project　1/SM3的生日攻击.png)
+![image](https://github.com/hsgroup30num1/homework-group-30/blob/main/project1/SM3的生日攻击.png)<br>
 ## 四、实验结果
 通过比较不同位数寻找碰撞所需时间可得，位数越多攻击越慢。
