@@ -12,3 +12,4 @@ Merkle Tree的特别之处在于，这是一种自下而上建立的树，允许
 ![MerkleTree](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/f0757fd7-a40f-4060-8319-df01439e4c2c)
 接下来我们验证“name”是否存在于Merkle Tree中。根据上图可知，我们需要提供阴影部分三个结点的哈希值。
 ## 三、运行结果
+![MerkleTree运行结果](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/22558aac-080b-415e-99a1-f7f7f03c8a87)
