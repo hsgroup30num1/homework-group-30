@@ -6,3 +6,8 @@
 在SM2_2P_decrypt_client.py文件中，客户端生成并保存子私钥d1，请求server辅助，针对利用server所公开公钥加密的密文进行解密。<br>
 注意，以上两个python文件均需import pre_SM2，client还需import mySM2。
 ## 二、运行结果
+先运行SM2_2P_decrypt_server.py文件建立连接<br>
+再运行SM2_2P_decrypt_client.py文件，运行结果如下
+![SM2_2P_decrypt_client](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/f8d56508-4aa4-4b0a-8658-36b8f45fe1da)
+![SM2_2P_decrypt_server](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/47dba43f-4662-447a-88ad-099b50f22bbe)
+
