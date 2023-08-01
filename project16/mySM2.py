@@ -119,14 +119,14 @@ def SM2_dec(C, sk):
 
 
 if __name__ == '__main__':
-    m = "I love you."
-    print('massage:', m)
+    m = "Hello my name is xxx"
+    print('m=', m)
 
     sk, pk = key_gen()
 
     c = SM2_enc(m, pk)
-    print('\n\nciphertext:', c)
+    print('\n\nc=', c)
 
     plain = SM2_dec(c, sk)
-    print('\n\nplaintext from ciphertext:', plain)
+    print('\n\n解密后的明文为', plain)
 # 开发时间：2023/8/1 22:36
