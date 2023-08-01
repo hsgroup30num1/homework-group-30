@@ -26,5 +26,7 @@ pre_SM2.py：适用于SM2的前置算法。包含SM2的系统参数以及一些�
 mySM2.py：用于实现SM2，需要用到pre_SM2.py。运行时先生成一对公私钥，然后利用公钥对消息进行加密，利用私钥对消息进行解密。
 ## 三、运行结果
 运行mySM2.py
-
+![SM2](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/813b66ce-d302-4179-a808-08d134456844)
+## 四、参考文献
+[1]https://blog.csdn.net/qq_44245503/article/details/126116193
 
