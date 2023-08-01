@@ -11,4 +11,6 @@
 4、利用加密结束后的iv值作为初始向量，来加密m_append，得到hash猜测值<br>
 5、将消息进行填充并添加附加消息后再次进行加密得到hash计算值<br>
 6、比较hash猜测值与hash计算值，若相等，则攻击成功。<br>
+注意，在进行长度扩展攻击之前，需要对gmssl库中sm3的hash函数进行修改，主要操作包括添加参数iv用于传递向量<br>
 ## 三、运行结果
+![长度扩展攻击](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/8f38b300-e9b8-4dc9-9f61-63cf88cfb056)
