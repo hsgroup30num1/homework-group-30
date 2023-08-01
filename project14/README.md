@@ -13,4 +13,4 @@ PGP可以使从未见过的使用者安全地进行通信，而不需要事先�
 1、接收者利用私钥解密码得到k<br>
 2、利用密钥k来解密密文<br>
 ## 三、运行结果
-
+![SM2_PGP](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/e79b409e-a60b-465f-b598-6109ac524958)
