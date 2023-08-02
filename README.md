@@ -3,6 +3,7 @@
 ### 姓名：韩舒 
 ### 学号：202100460068
 未组队，所有project均一人完成。
+
 ## 二、项目完成情况
 ### （一）已完成project
 Project1: implement the naïve birthday attack of reduced SM3<br>
@@ -15,6 +16,7 @@ Project13: Implement the above ECMH scheme<br>
 Project14: Implement a PGP scheme with SM2<br>
 Project15: implement sm2 2P sign with real network communication<br>
 Project16: implement sm2 2P decrypt with real network communication<br>
+
 ### （二）未完成project
 Project4: do your best to optimize SM3 implementation (software)<br>
 Project6: impl this protocol with actual network communication<br>
@@ -27,17 +29,22 @@ Project18: send a tx on Bitcoin testnet, and parse the tx data down to every bit
 Project19: forge a signature to pretend that you are Satoshi<br>
 Project21: Schnorr Bacth<br>
 Project22: research report on MPT<br>
+
 ## 三、project具体实现
 
 ### Project1: implement the naïve birthday attack of reduced SM3
 https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project%201
+
 #### 实验思路
 生日攻击基于生日悖论，即如果一个房间里有23个或23个以上的人，那么至少有两人生日相同的概率大于50%。随着消息空间的增大，能以较大概率在消息空间中找到碰撞。对SM3前n比特进行生日攻击，消息空间（即输入）为2的二分之n次方，我们可以检测碰撞，并通过多次实验计算成功率与所需时间。<br>
+
 我们分别取前8比特、前16比特、前32比特进行生日攻击，各自循环1000次来计算成功率与所需时间。
+
 #### 运行指导
 硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
 软件环境：PyCharm Community Edition 2022.2.2<br>
 运行方式：直接运行文件“SM3的生日攻击.py”<br>
+
 #### 实验结果
 前n比特    |成功率    |所需时间
 ---------------|---------------------------|-------------------------------
@@ -49,14 +56,18 @@ https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028
 
 ### Project2: implement the Rho method of reduced SM3
 https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project%202
+
 #### 实验思路
 Rho算法的核心思想即不必逐个寻找碰撞，而是“跳着”求，经过多次嵌套运算后形成一个环即形成碰撞。<br>
 在实现过程中，我们随机选取一个数i作为初始值并将其分别赋值给h1与h2，每次循环时分别将h1加密一次，将h2加密两次。当h1与h2前n比特产生碰撞时，分别记录其加密后的hash值，并计算产生碰撞所用时间。需要注意的是，通过比较发现函数x^2+1相较于x^2来说效率更高，因此本次实验中映射关系选择x^2+1。<br>
+
 我们分别对前4比特、前8比特、前12比特以及前16比特进行Rho碰撞。
+
 #### 运行指导
 硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
 软件环境：PyCharm Community Edition 2022.2.2<br>
 运行方式：直接运行文件“SM3的Rho碰撞.py”<br>
+
 #### 实验结果
 前n比特    |4    |8    |12    |16
 --------------------|--------------------|--------------------|--------------------|--------------------|
@@ -66,8 +77,10 @@ Rho算法的核心思想即不必逐个寻找碰撞，而是“跳着”求，�
 
 ### Project3: implement length extension attack for SM3, SHA256, etc.
 https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project3
+
 #### 实验思路
 对于基于Merkle–Damgård结构的算法，如MD5、SHA1、SHA2等，均存在以下问题： 在已知message与MAC的前提下，不需要已知key，只要知道key的长度，即可通过在message后添加信息计算来求得相应的MAC。 因此，如果攻击者掌握了Hash(message)的值与message的长度，就可以在不知道message的情况下得到Hash(message||padding||message1)的值。<br>
+
 对SM3的长度扩展攻击过程如下：<br>
 1、随机生成一个消息m<br>
 2、对m进行SM3加密得到Hash<br>
@@ -75,33 +88,119 @@ https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028
 4、利用加密结束后的iv值作为初始向量，来加密m_append，得到hash猜测值<br>
 5、将消息进行填充并添加附加消息后再次进行加密得到hash计算值<br>
 6、比较hash猜测值与hash计算值，若相等，则攻击成功。<br>
+
 注意，在进行长度扩展攻击之前，需要对gmssl库中sm3的hash函数进行修改，主要操作包括添加参数iv用于传递向量<br>
+
 #### 运行指导
 硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
 软件环境：PyCharm Community Edition 2022.2.2<br>
 运行方式：直接运行文件“SM3的长度扩展攻击.py”<br>
+
 #### 实验结果
 随机生成一个消息，长度扩展攻击结果如下图所示。<br>
 ![长度扩展攻击](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/6565b3d6-8b8f-4e53-afa5-be5b00fa665a)
 
 ### Project5: Impl Merkle Tree following RFC6962
 https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project5
+
 #### 实验思路
 Merkle Tree是一种哈希树，用于编码大块的信息。
 其中每个叶子节点都标有数据块的加密哈希值，而每个非叶子节点都标有其子节点的加密哈希值的标签。
 大多数哈希树的实现是二进制的（每个节点有两个子节点），但它们也可以有更多的子节点。
 Merkle Tree的特别之处在于，这是一种自下而上建立的树，允许你验证某些值是否存在于树中，而不需要在树的每个元素上循环，这一特点非常有用。<br>
+
 实验代码包括两部分：<br>
 其一是头文件picosha.h，文件来源网络，用于实现sha256；<br>
 其二是cpp文件MerkleTree，该文件实现MerkleTree的创建，同时可以用于确定某节点的哈希值以及判断给定哈希值的叶子节点是否存在于MerkleTree中。<br>
+
 首先利用append函数添加5个叶子结点并自动生成如下图所示的MerkleTree，然后采用先序遍历进行打印并输出。<br>
 ![MerkleTree](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/3fa96a66-f42b-4a82-9a08-203ba0af4e58)
 接下来我们验证“name”是否存在于Merkle Tree中。根据上图可知，我们需要提供阴影部分三个结点的哈希值。
+
 #### 运行指导
 硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
 软件环境：Visual Studio 2019<br>
 运行方式：直接运行文件“MerkleTree.cpp”<br>
+
 #### 实验结果
 ![MerkleTree运行结果](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/26875848-c5d4-4c4e-aaa4-0f389af1f8a6)
 
+### *Project10: report on the application of this deduce technique in Ethereum with ECDSA
+https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project10
 
+#### 实验思路
+要研究ECDSA在以太坊中的应用，我们首先对ECDSA与以太坊的概念进行解析。<br>
+
+ECDSA椭圆曲线数字签名算法是使用椭圆曲线密码（ECC）对数字签名算法（DSA）的模拟，整个签名过程与DSA类似，不同点是签名所采取的算法为ECC，最后得到的签名值为r，s。<br>
+
+ECDSA签名过程如下：<br>
+希望对消息m进行签名，选用椭圆曲线参数为D=（p,a,b,G,n,h），其中G为基点，n为G的阶；密钥对为（k,Q），其中k为私钥，Q为公钥，Q=kG。<br>
+1、产生一个随机整数r（0<r<n）<br>
+2、计算点R=rG=(x,y)<br>
+3、计算H(m)=SHA1(m,x,y)<br>
+4、计算s=r-H(m) * k (mod n)<br>
+5、签名值为(r,s),注意r与s均不为0<br>
+
+ECDSA验证过程如下：<br>
+验证方已知签名(r,s)，椭圆曲线参数D=（p,a,b,G,n,h），公钥Q，消息m。<br>
+1、首先验证r与s均为区间[1,n-1]上的整数<br>
+2、计算：sG+H(m)P=(x1,y1)，r1≡ x1 mod p<br>
+3、验证等式：r1 ≡ r mod p<br>
+4、当等式成立时，签名通过验证<br>
+
+以太坊（Ethereum）是一个开源的有智能合约功能的公共区块链平台，
+通过其专用加密货币以太币（Ether，简称“ETH”）提供去中心化的以太虚拟机（Ethereum Virtual Machine）来处理点对点合约。<br>
+
+在以太坊的交易过程中，如何认证某笔交易是否是由付款人发起的呢，这个环节就用到了ECDSA签名技术。简化的签名步骤如下:<br>
+1.对交易数据进行 RLP 编码<br>
+2.对第一步得到的编码进行哈希<br>
+3.将哈希与标识以太坊的特定字符串拼接在一起，再次哈希。这一步是为了保证该签名仅在以太坊上可用<br>
+4.用ECDSA算法对第三步得到的哈希进行签名，得到 (r, s, v)<br>
+5.将第四步得到的签名与交易数据拼接，再次进行RLP编码，得到最终的签名消息。<br>
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz
+软件环境：PyCharm Community Edition 2022.2.2
+运行方式：直接运行文件“ECDSA.py”
+
+#### 实验结果
+选取椭圆曲线参数后，运行上述python文件可以得到如下结果。
+![ECDSA](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/4c8c4f2c-ca6b-4d4c-8e1b-bb2285cf2d96)
+
+### Project11: impl sm2 with RFC6979
+https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project11
+
+#### 实验思路
+SM2椭圆曲线公钥密码算法的实现，重点在加密与解密算法。<br>
+
+SM2加密如下：<br>
+1、用随机数发生器产生随机数k (1<k<n-1)<br>
+2、计算椭圆曲线点C1=[k]G=(x1,y1)，并将其转换为比特串（A的私钥生成公钥）<br>
+3、计算椭圆曲线点S=[h]Pb，若S是无穷远点，则报错并退出 h为n的余因子<br>
+4、计算椭圆曲线点[k]Pb=(x2,y2)，并将其转换为比特串（A的私钥乘B的公钥）<br>
+5、计算t=KDF(x2||y2,klen)，若t为全0比特串，则返回①; KDF为密钥派生函数<br>
+6、计算C2=M⊕t<br>
+7、计算C3=Hash(x2||M||y2)<br>
+8、输出密文C=C1||C3||C2<br>
+
+SM2解密如下：<br>
+1、从C中取出比特串C1，将其转换为椭圆曲线上的点，验证C1是否满足椭圆曲线方程<br>
+2、计算椭圆曲线点S=[h]Pb，若S是无穷远点，则报错并退出<br>
+3、计算[db]C1=(x2,y2)，并将其转换为比特串 db B的公钥<br>
+4、计算t=KDF(x2||y2,klen)，若t为全0比特串，则返回（一） KDF为密钥派生函数<br>
+5、从C中取出比特串C2,计算M=C2⊕t<br>
+6、计算u=Hash(x2||M||y2)，从C中取出比特串C3，若u不等于C3，则报错并退出<br>
+7、输出明文M<br>
+
+本次实验共用到以下两个文件：<br>
+pre_SM2.py：适用于SM2的前置算法。包含SM2的系统参数以及一些运算（椭圆曲线上点加、逆元、点减、点乘等）<br>
+mySM2.py：用于实现SM2，需要用到pre_SM2.py。运行时先生成一对公私钥，然后利用公钥对消息进行加密，利用私钥对消息进行解密。
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz
+软件环境：PyCharm Community Edition 2022.2.2
+运行方式：直接运行文件“mySM2.py”
+
+#### 实验结果
+输入明文“Hello my name is xxx”，利用SM2加密输出密文c，解密输出明文m。
+![SM2](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/c3fc5308-9e8f-42de-ae52-bb90ae6c6b51)
