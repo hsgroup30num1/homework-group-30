@@ -42,6 +42,6 @@ ECDSA 签名为(r,s)，在以太坊中还引入了额外的变量 v（恢复标�
 选取椭圆曲线参数，运行ECDSA.py文件得到如下运行结果。
 ![ECDSA](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/aff6f9d9-cff4-4a24-ae7e-5b2bf092e6f5)
 ## 参考文献
-[1]https://blog.csdn.net/weixin_43867940/article/details/130258535
+[1]https://blog.csdn.net/weixin_43867940/article/details/130258535<br>
 [2]https://blog.csdn.net/u013758702/article/details/121764374
 
