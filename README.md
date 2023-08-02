@@ -159,9 +159,9 @@ ECDSA验证过程如下：<br>
 5.将第四步得到的签名与交易数据拼接，再次进行RLP编码，得到最终的签名消息。<br>
 
 #### 运行指导
-硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz
-软件环境：PyCharm Community Edition 2022.2.2
-运行方式：直接运行文件“ECDSA.py”
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：直接运行文件“ECDSA.py”<br>
 
 #### 实验结果
 选取椭圆曲线参数后，运行上述python文件可以得到如下结果。
@@ -197,9 +197,9 @@ pre_SM2.py：适用于SM2的前置算法。包含SM2的系统参数以及一些�
 mySM2.py：用于实现SM2，需要用到pre_SM2.py。运行时先生成一对公私钥，然后利用公钥对消息进行加密，利用私钥对消息进行解密。
 
 #### 运行指导
-硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz
-软件环境：PyCharm Community Edition 2022.2.2
-运行方式：直接运行文件“mySM2.py”
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：直接运行文件“mySM2.py”<br>
 
 #### 实验结果
 输入明文“Hello my name is xxx”，利用SM2加密输出密文c，解密输出明文m。
@@ -238,9 +238,53 @@ PGP（Pretty Good Privacy）是个混合加密算法，它由一个对称加密�
 2、利用密钥k来解密密文<br>
 
 #### 运行指导
-硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz
-软件环境：PyCharm Community Edition 2022.2.2
-运行方式：直接运行文件“SM2_PGP.py”
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：直接运行文件“SM2_PGP.py”<br>
 
 #### 实验结果
 ![SM2_PGP](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/41a2f024-040d-424b-944d-09c30c0d9a0c)
+
+### Project15: implement sm2 2P sign with real network communication
+https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project15
+
+#### 实验思路
+对需要双方参与的SM2签名，设置client作为签名发起方，server作为签名辅助方。<br>
+
+在SM2_2P_sign_server.py文件中，服务端负责接收client发来的请求，生成并保存子私钥d2，需要辅助client进行签名，向client发送辅助的数据。<br>
+在SM2_2P_sign_client.py文件中，客户端生成并保存私钥d1，请求server辅助完成签名。<br>
+注意，以上两个python文件均需import pre_SM2。
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：先运行SM2_2P_sign_server.py文件建立连接。再运行SM2_2P_sign_client.py文件。<br>
+
+#### 实验结果
+运行SM2_2P_sign_client.py后，SM2_2P_sign_client.py的运行结果如下：
+![SM2_2P_sign_client](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/533eba29-179e-4797-ba71-f98b2fd1c591)
+
+SM2_2P_sign_server.py的运行结果如下：
+![SM2_2P_sign_server](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/ba25bb8c-496f-499d-9d9e-5c95af83c2f5)
+
+### Project16: implement sm2 2P decrypt with real network communication
+https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project16
+
+#### 实验思路
+对需要双方参与的SM2解密，设置client作为解密发起方，server作为解密辅助方。<br>
+
+在SM2_2P_decrypt_server.py文件中，服务端负责接收client发来的请求，生成并保存子私钥d2，计算并公开双方子私钥对应的公钥，需要辅助client进行解密，向client发送辅助的数据。<br>
+在SM2_2P_decrypt_client.py文件中，客户端生成并保存子私钥d1，请求server辅助，针对利用server所公开公钥加密的密文进行解密。<br>
+注意，以上两个python文件均需import pre_SM2，client还需import mySM2。
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：先运行SM2_2P_decrypt_server.py文件建立连接，再运行SM2_2P_decrypt_client.py文件。<br>
+
+#### 实验结果
+运行SM2_2P_decrypt_client.py后，SM2_2P_decrypt_client.py的运行结果如下：
+![SM2_2P_decrypt_client](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/f93c5d1a-456a-43b8-94b6-b613ff42e66d)
+
+SM2_2P_decrypt_server.py的运行结果如下：
+![SM2_2P_decrypt_server](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/734458b0-c844-434f-abea-46b14f772344)
