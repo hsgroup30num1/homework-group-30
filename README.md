@@ -64,3 +64,44 @@ Rho算法的核心思想即不必逐个寻找碰撞，而是“跳着”求，�
 
 通过比较可知，随着需要碰撞的位数的增大，所需时间呈指数级增长（尤其长度大于16比特后），即碰撞所形成的圈呈指数级增大。
 
+### Project3: implement length extension attack for SM3, SHA256, etc.
+https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project3
+#### 实验思路
+对于基于Merkle–Damgård结构的算法，如MD5、SHA1、SHA2等，均存在以下问题： 在已知message与MAC的前提下，不需要已知key，只要知道key的长度，即可通过在message后添加信息计算来求得相应的MAC。 因此，如果攻击者掌握了Hash(message)的值与message的长度，就可以在不知道message的情况下得到Hash(message||padding||message1)的值。<br>
+对SM3的长度扩展攻击过程如下：<br>
+1、随机生成一个消息m<br>
+2、对m进行SM3加密得到Hash<br>
+3、随机生成一个附加消息m_append<br>
+4、利用加密结束后的iv值作为初始向量，来加密m_append，得到hash猜测值<br>
+5、将消息进行填充并添加附加消息后再次进行加密得到hash计算值<br>
+6、比较hash猜测值与hash计算值，若相等，则攻击成功。<br>
+注意，在进行长度扩展攻击之前，需要对gmssl库中sm3的hash函数进行修改，主要操作包括添加参数iv用于传递向量<br>
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：直接运行文件“SM3的长度扩展攻击.py”<br>
+#### 实验结果
+随机生成一个消息，长度扩展攻击结果如下图所示。<br>
+![长度扩展攻击](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/6565b3d6-8b8f-4e53-afa5-be5b00fa665a)
+
+### Project5: Impl Merkle Tree following RFC6962
+https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project5
+#### 实验思路
+Merkle Tree是一种哈希树，用于编码大块的信息。
+其中每个叶子节点都标有数据块的加密哈希值，而每个非叶子节点都标有其子节点的加密哈希值的标签。
+大多数哈希树的实现是二进制的（每个节点有两个子节点），但它们也可以有更多的子节点。
+Merkle Tree的特别之处在于，这是一种自下而上建立的树，允许你验证某些值是否存在于树中，而不需要在树的每个元素上循环，这一特点非常有用。<br>
+实验代码包括两部分：<br>
+其一是头文件picosha.h，文件来源网络，用于实现sha256；<br>
+其二是cpp文件MerkleTree，该文件实现MerkleTree的创建，同时可以用于确定某节点的哈希值以及判断给定哈希值的叶子节点是否存在于MerkleTree中。<br>
+首先利用append函数添加5个叶子结点并自动生成如下图所示的MerkleTree，然后采用先序遍历进行打印并输出。<br>
+![MerkleTree](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/3fa96a66-f42b-4a82-9a08-203ba0af4e58)
+接下来我们验证“name”是否存在于Merkle Tree中。根据上图可知，我们需要提供阴影部分三个结点的哈希值。
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：Visual Studio 2019<br>
+运行方式：直接运行文件“MerkleTree.cpp”<br>
+#### 实验结果
+![MerkleTree运行结果](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/26875848-c5d4-4c4e-aaa4-0f389af1f8a6)
+
+
