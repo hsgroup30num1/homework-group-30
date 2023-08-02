@@ -40,4 +40,5 @@ ECDSA 签名为(r,s)，在以太坊中还引入了额外的变量 v（恢复标�
 5.将第四步得到的签名与交易数据拼接，再次进行RLP编码，得到最终的签名消息。<br>
 ## 代码实现
 选取椭圆曲线参数，运行ECDSA.py文件得到如下运行结果。
+![ECDSA](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/aff6f9d9-cff4-4a24-ae7e-5b2bf092e6f5)
 
