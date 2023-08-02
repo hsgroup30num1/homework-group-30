@@ -204,3 +204,43 @@ mySM2.py：用于实现SM2，需要用到pre_SM2.py。运行时先生成一对�
 #### 实验结果
 输入明文“Hello my name is xxx”，利用SM2加密输出密文c，解密输出明文m。
 ![SM2](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/c3fc5308-9e8f-42de-ae52-bb90ae6c6b51)
+
+### Project13: Implement the above ECMH scheme
+https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project13
+
+#### 实验思路
+ECMH的中心思想为将元素hash映射成椭圆曲线上的点后，利用椭圆曲线上的加法添加信息并将信息存储在集合中，后将集合中每一个元素的hash映射成椭圆曲线上的点。<br>
+由于重复的相同元素会产生不同的签名，因此将hash=(b"hello",b"hello")带入hashmul函数进行计算。理想的实验结果为二者产生的hash不同。
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：直接运行文件“ECMH.py”<br>
+
+#### 实验结果
+![ECMH](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/d3785867-371c-40b7-b29e-6206f848580e)
+
+### Project14: Implement a PGP scheme with SM2
+https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project14
+
+#### 实验思路
+PGP（Pretty Good Privacy）是个混合加密算法，它由一个对称加密算法（IDEA）、一个非对称加密算法（RSA）、与单向散列算法（MD5）
+以及一个随机数产生器（从用户击键频率产生伪随机数序列的种子）组成<br>
+主要思路即利用公钥密码来加密密钥，利用对称密码来加密明文。<br>
+
+加密过程：<br>
+1、随机选取密钥k<br>
+2、利用公钥来加密k，并发送给接收者（SM2）<br>
+3、利用密钥k来加密明文（DES）<br>
+
+解密过程：<br>
+1、接收者利用私钥解密码得到k<br>
+2、利用密钥k来解密密文<br>
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz
+软件环境：PyCharm Community Edition 2022.2.2
+运行方式：直接运行文件“SM2_PGP.py”
+
+#### 实验结果
+![SM2_PGP](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/41a2f024-040d-424b-944d-09c30c0d9a0c)
