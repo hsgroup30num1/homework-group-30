@@ -8,6 +8,7 @@ TrieTree，又称字典树或前缀树，是一种有序树，典型应用是用
 相比于哈希表，使用前缀树来进行查询拥有共同前缀key的数据时十分高效，例如在字典中查找前缀为pre的单词，对于哈希表来说，需要遍历整个表，时间效率为O(n)，
 然而对于前缀树来说，只需要在树中找到前缀为pre的节点，且遍历以这个节点为根节点的子树即可。但是对于最差的情况（前缀为空串)，时间效率为O(n),仍然需要遍历整棵树，此时效率与哈希表相同。<br>
 下图所示Trie Tree表示了字符串集合{"ab","acd","ace","acf","g","hij"}。<br>
+![Trie Tree](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/a25e9ceb-d3da-417c-a66e-a76698b10112)
 
 Trie Tree的特点如下：<br>
 1、根节点不包含字符，除根节点外的每一个子节点都包含一个字符。<br>
@@ -19,11 +20,13 @@ Trie Tree的特点如下：<br>
 
 ## Patricia Tree
 压缩前缀树，是一种更节省空间的 Trie Tree。对于树的每个节点，如果该节点是唯一的子节点，就和父节点合并。<br>
+![Patricia Tree](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/c571ee9d-b5cd-4eb4-be59-42edb8092424)
 
 ## Merkle Tree
 Merkle Tree是一种哈希树，用于编码大块的信息。 其中每个叶子节点都标有数据块的加密哈希值，而每个非叶子节点都标有其子节点的加密哈希值的标签。 
 大多数哈希树的实现是二进制的（每个节点有两个子节点），但它们也可以有更多的子节点。 
 Merkle Tree的特别之处在于，这是一种自下而上建立的树，允许你验证某些值是否存在于树中，而不需要在树的每个元素上循环，这一特点非常有用。<br>
+![Merkle Tree](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/aba0327b-e9de-4be0-9755-1f66d970aacd)
 
 ## MPT
 MPT，即Merkle Patricia Tree。是一种经过改良的、融合了默克尔树和前缀树两种树结构优点的数据结构，是以太坊中用来组织管理账户数据、生成交易集合哈希的重要数据结构。<br>
@@ -44,6 +47,7 @@ MPT树中的节点包括空节点、叶子节点、扩展结点和分支节点�
 所以分支节点是一个长度为17的list，前16个元素对应着key中的16个可能的十六进制字符。如果有一个[key,value]对在这个分支节点终止，则最后一个元素代表一个值
 （例如，有三个key，分别是（abc，abd，ab），则该节点的第17个字段存储了ab节点的值）即分支节点既可以是搜索路径的终止也可以是路径的中间节点。
 对应于Trie中的关键路径节点。<br>
+![MPT](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/e51b5510-87f9-4d98-bdab-2d8cd532dae6)
 
 MPT树的结构特点如下:<br>
 
