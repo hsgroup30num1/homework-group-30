@@ -17,6 +17,7 @@ Project13: Implement the above ECMH scheme<br>
 Project14: Implement a PGP scheme with SM2<br>
 Project15: implement sm2 2P sign with real network communication<br>
 Project16: implement sm2 2P decrypt with real network communication<br>
+Project19: forge a signature to pretend that you are Satoshi<br>
 
 ### （二）未完成project
 Project4: do your best to optimize SM3 implementation (software)<br>
@@ -26,7 +27,6 @@ Project8: AES impl with ARM instruction<br>
 Project9: AES / SM4 software implementation<br>
 Project17：比较Firefox和谷歌的记住密码插件的实现区别<br>
 Project18: send a tx on Bitcoin testnet, and parse the tx data down to every bit, better write script yourself<br>
-Project19: forge a signature to pretend that you are Satoshi<br>
 Project21: Schnorr Bacth<br>
 Project22: research report on MPT<br>
 
@@ -314,3 +314,26 @@ https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028
 
 SM2_2P_decrypt_server.py的运行结果如下：
 ![SM2_2P_decrypt_server](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/734458b0-c844-434f-abea-46b14f772344)
+
+### Project19: forge a signature to pretend that you are Satoshi
+https://github.com/hsgroup30num1/homework-group-30/tree/4665a38c765268ab11c93a684d75a9bc678d220e/project19
+
+#### 实验思路
+比特币中使用ECDSA进行签名，本次实验研究如何在未知明文消息m的前提下，伪造能通过检验的合法签名。<br>
+本次实验代码包括两部分，除signatures_forge.py外，还包括Curve.py文件，用于实现椭圆曲线类的计算，对运算符进行了定义，使我们在signatures_forge.py中可以直接使用运算符来进行椭圆曲线上点与数的运算。<br>
+
+如何进行签名的伪造呢？<br>
+
+假设已经得到了真实且合法的签名(r,s)。<br>
+在验证算法中，s^{-1}(eG+rP)=R=(x',y')，只需验证r=x' mod n是否成立。<br>
+针对此过程，我们随机选择u,v，计算R'=(x',y')=uG+vP。<br>
+当s'^{-1}(e'G+r'P)=uG+vP，计算得到(r',s',e')，这样就伪造得到可以通过验证的签名。<br>
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：直接运行文件“signatures_forge.py”<br>
+
+#### 实验结果
+对消息“hello”进行签名得到正确签名，后进行伪造得到伪造签名，经验证发现伪造签名可以通过验证算法，伪造成功。<br>
+![signatures_forge](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/f6280f2c-ff25-4fac-ba54-201b77636d6c)
