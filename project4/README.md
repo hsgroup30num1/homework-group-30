@@ -6,10 +6,22 @@
 本次实验通过宏定义、SIMD指令集以及算法优化等方法来实现对SM3的优化。具体优化思路如下。<br>
 
 ### 布尔函数
+![布尔函数](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/e772ff0b-6b1f-4977-83fe-54be8736e19c)
 
 #### 优化：利用C语言的宏定义来代替函数，从而避免函数调用引起的开销。
+优化代码如下：<br>
+```c
+#define FF0(x,y,z)  (x ^ y ^ z)
+#define FF1(x,y,z)  ((x & y) | (x & z) | (y & z))
+
+#define GG0(x,y,z)  (x ^ y ^ z)
+#define GG1(x,y,z)  ((x & y) | ((~x) & z))
+```
+### 置换函数
+![置换函数](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/ac586d36-6ba1-4623-86d4-d7113773bec4)
 
 ### 消息扩展函数
+![消息扩展函数](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/e655a62a-f375-45da-bed5-60fe44d0fd0c)
 
 #### 优化：利用SIMD指令集同时处理多组数据。
 SM3说明文档中的消息扩展是对32位字进行独立的操作，由于其相互之间没有依赖关系，因此我们可以考虑用SIMD来同时处理多组数据。<br>
@@ -18,6 +30,8 @@ SM3说明文档中的消息扩展是对32位字进行独立的操作，由于其
 因此使用128位的SIMD指令集是最合适的，每次同时处理三个32位字，只会空出一个字的位置。使用更大的宽度是没有意义的。
 
 ### 压缩函数
+![压缩函数](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/d0bd4415-2d52-4c5f-b6a2-75607a7a944a)
+
 #### 优化：
 #### 1、利用C语言的宏定义来代替函数，从而避免函数调用引起的开销。
 #### 2、循环展开
