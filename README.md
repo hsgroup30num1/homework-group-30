@@ -101,7 +101,35 @@ https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028
 ![长度扩展攻击](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/6565b3d6-8b8f-4e53-afa5-be5b00fa665a)
 
 ### Project4: do your best to optimize SM3 implementation (software)
+https://github.com/hsgroup30num1/homework-group-30/tree/3c33af14c39439f2d13fd90e65ce3200872b9ec9/project4
 
+#### 实验思路
+根据SM3说明文档，编写SM3的各个基本组件。包括布尔函数、置换函数、消息扩展函数、压缩函数。<br>
+本次实验通过宏定义、SIMD指令集以及算法优化等方法来实现对SM3的优化。具体优化思路如下。<br>
+
+##### 布尔函数
+优化：利用C语言的宏定义来代替函数，从而避免函数调用引起的开销。
+
+##### 消息扩展函数
+优化：利用128位的SIMD指令集同时处理多组数据。
+
+##### 压缩函数
+优化：<br>
+1、利用C语言的宏定义来代替函数，从而避免函数调用引起的开销。<br>
+2、循环展开<br>
+分析压缩函数可知，轮函数共循环执行64次。分析可得这样迭代8次后，就会回到最初的情况。因此，可以将8次迭代作为一组，总共8组实现展开。<br>
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：Visual Studio 2019<br>
+运行方式：直接运行文件“main.cpp”<br>
+
+#### 实验结果
+对“abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd”进行SM3加密。<br>
+由于单次运行时间较短，为了方便测算时间，我们重复进行1000000次SM3运算，运行结果如下:<br>
+1000000次运算共耗时3.41s<br>
+平均每次SM3运算耗时3.4μs<br>
+由于每次运算512bit分组，因此吞吐率可达18.82MB/s<br>
 
 ### Project5: Impl Merkle Tree following RFC6962
 https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project5
