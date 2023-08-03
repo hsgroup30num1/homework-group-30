@@ -12,6 +12,7 @@ Project3: implement length extension attack for SM3, SHA256, etc.<br>
 Project5: Impl Merkle Tree following RFC6962<br>
 Project10: report on the application of this deduce technique in Ethereum with ECDSA<br>
 Project11: impl sm2 with RFC6979<br>
+Project12: verify the above pitfalls with proof-of-concept code<br>
 Project13: Implement the above ECMH scheme<br>
 Project14: Implement a PGP scheme with SM2<br>
 Project15: implement sm2 2P sign with real network communication<br>
@@ -23,7 +24,6 @@ Project6: impl this protocol with actual network communication<br>
 Project7: Try to Implement this scheme<br>
 Project8: AES impl with ARM instruction<br>
 Project9: AES / SM4 software implementation<br>
-Project12: verify the above pitfalls with proof-of-concept code<br>
 Project17：比较Firefox和谷歌的记住密码插件的实现区别<br>
 Project18: send a tx on Bitcoin testnet, and parse the tx data down to every bit, better write script yourself<br>
 Project19: forge a signature to pretend that you are Satoshi<br>
@@ -204,6 +204,32 @@ mySM2.py：用于实现SM2，需要用到pre_SM2.py。运行时先生成一对�
 #### 实验结果
 输入明文“Hello my name is xxx”，利用SM2加密输出密文c，解密输出明文m。
 ![SM2](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/c3fc5308-9e8f-42de-ae52-bb90ae6c6b51)
+
+### Project12: verify the above pitfalls with proof-of-concept code
+https://github.com/hsgroup30num1/homework-group-30/tree/860460e7d37eb3e126aa7dfc6f5bd4e9f5fa3b58/project12
+
+#### 实验思路
+通过编写代码，证明数字签名算法中存在部分缺陷。<br>
+实验代码包括两部分：signatures_pitfall.py以及它所import的Curve.py<br>
+
+首先对椭圆曲线的参数进行选取。<br>
+然后对三种签名算法可能存在的安全隐患进行测试，测试内容如下：<br>
+
+1、泄露随机数k，推导出私钥。<br>
+2、重用随机数k，推导出私钥。<br>
+3、两个用户使用了同样的k，互相推导出对方的私钥。<br>
+4、SM2与ECDSA算法使用相同的私钥d和随机数k，可以根据两组签名推导私钥。<br>
+5、对称性，即(r,s)和(r,-s)都是合法的签名。调用验证算法验证(r,-s)是否能通过检测。<br>
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：PyCharm Community Edition 2022.2.2<br>
+运行方式：直接运行文件“signatures_pitfall.py”<br>
+
+#### 实验结果
+运行结果如下：<br>
+![signatures_pitfall](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/777e07e8-6638-4c40-a3cd-12024c9d334c)
+分析运行结果可知，对于以上可能存在的安全隐患，均可正确推导出私钥并通过验证。因此数字签名算法中存在缺陷。
 
 ### Project13: Implement the above ECMH scheme
 https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project13
