@@ -9,6 +9,7 @@
 Project1: implement the naïve birthday attack of reduced SM3<br>
 Project2: implement the Rho method of reduced SM3<br>
 Project3: implement length extension attack for SM3, SHA256, etc.<br>
+Project4: do your best to optimize SM3 implementation (software)<br>
 Project5: Impl Merkle Tree following RFC6962<br>
 Project10: report on the application of this deduce technique in Ethereum with ECDSA<br>
 Project11: impl sm2 with RFC6979<br>
@@ -20,7 +21,6 @@ Project16: implement sm2 2P decrypt with real network communication<br>
 Project19: forge a signature to pretend that you are Satoshi<br>
 
 ### （二）未完成project
-Project4: do your best to optimize SM3 implementation (software)<br>
 Project6: impl this protocol with actual network communication<br>
 Project7: Try to Implement this scheme<br>
 Project8: AES impl with ARM instruction<br>
@@ -99,6 +99,9 @@ https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028
 #### 实验结果
 随机生成一个消息，长度扩展攻击结果如下图所示。<br>
 ![长度扩展攻击](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/6565b3d6-8b8f-4e53-afa5-be5b00fa665a)
+
+### Project4: do your best to optimize SM3 implementation (software)
+
 
 ### Project5: Impl Merkle Tree following RFC6962
 https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project5
