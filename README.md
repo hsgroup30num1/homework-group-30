@@ -19,6 +19,7 @@ Project14: Implement a PGP scheme with SM2<br>
 Project15: implement sm2 2P sign with real network communication<br>
 Project16: implement sm2 2P decrypt with real network communication<br>
 Project19: forge a signature to pretend that you are Satoshi<br>
+Project22: research report on MPT<br>
 
 ### （二）未完成project
 Project6: impl this protocol with actual network communication<br>
@@ -28,7 +29,6 @@ Project9: AES / SM4 software implementation<br>
 Project17：比较Firefox和谷歌的记住密码插件的实现区别<br>
 Project18: send a tx on Bitcoin testnet, and parse the tx data down to every bit, better write script yourself<br>
 Project21: Schnorr Bacth<br>
-Project22: research report on MPT<br>
 
 ## 三、project具体实现
 
@@ -368,3 +368,21 @@ https://github.com/hsgroup30num1/homework-group-30/tree/4665a38c765268ab11c93a68
 #### 实验结果
 对消息“hello”进行签名得到正确签名，后进行伪造得到伪造签名，经验证发现伪造签名可以通过验证算法，伪造成功。<br>
 ![signatures_forge](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/f6280f2c-ff25-4fac-ba54-201b77636d6c)
+
+### Project22: research report on MPT
+https://github.com/hsgroup30num1/homework-group-30/tree/99f8723091936f502d94df7ecb78f473c1c27b4b/project22
+
+MPT (Merkle Patricia Tries) 是以太坊存储数据的核心数据结构，它是由 Merkle Tree 和 Patricia Tree 结合所组成的一种树形结构，理解 MPT 有助于帮助我们更好的理解以太坊的数据存储。<br>
+首先我们介绍基本的Trie Tree 结构和 Merkle Tree、Patricia Tree这两种特殊结构，在此基础上我们研究MPT的结构特点及其优点与应用。<br>
+
+#### Trie Tree
+TrieTree，又称字典树或前缀树，是一种有序树，典型应用是用于统计，排序和保存大量的字符串。其核心思想就是用空间换时间，利用公共前缀缩小要比较的范围来达到快速查找的目的。相比于哈希表，使用前缀树来进行查询拥有共同前缀key的数据时十分高效。但也存在一定的缺陷，当存在少量的长字符串，且某个较长前缀下只有本身一个元素时，树的高度会很大，且一条长路径上只有一个叶节点。这样极大地浪费存储空间，且应用起来效率也不高。
+
+#### Patricia Tree
+压缩前缀树，是一种更节省空间的 Trie Tree。对于树的每个节点，如果该节点是唯一的子节点，就和父节点合并。
+
+#### Merkle Tree
+Merkle Tree是一种哈希树，用于编码大块的信息。 其中每个叶子节点都标有数据块的加密哈希值，而每个非叶子节点都标有其子节点的加密哈希值的标签。Merkle Tree的特别之处在于，这是一种自下而上建立的树，允许你验证某些值是否存在于树中，而不需要在树的每个元素上循环，这一特点非常有用。
+
+#### MPT
+MPT，即Merkle Patricia Tree。是一种经过改良的、融合了默克尔树和前缀树两种树结构优点的数据结构，是以太坊中用来组织管理账户数据、生成交易集合哈希的重要数据结构。MPT树中的节点包括空节点、叶子节点、扩展结点和分支节点。接下来从MPT的作用、结构特点、设计目的、优点以及应用等角度进行详细阐述。
