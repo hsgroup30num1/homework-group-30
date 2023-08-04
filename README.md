@@ -11,6 +11,7 @@ Project2: implement the Rho method of reduced SM3<br>
 Project3: implement length extension attack for SM3, SHA256, etc.<br>
 Project4: do your best to optimize SM3 implementation (software)<br>
 Project5: Impl Merkle Tree following RFC6962<br>
+Project9: AES / SM4 software implementation<br>
 Project10: report on the application of this deduce technique in Ethereum with ECDSA<br>
 Project11: impl sm2 with RFC6979<br>
 Project12: verify the above pitfalls with proof-of-concept code<br>
@@ -25,7 +26,6 @@ Project22: research report on MPT<br>
 Project6: impl this protocol with actual network communication<br>
 Project7: Try to Implement this scheme<br>
 Project8: AES impl with ARM instruction<br>
-Project9: AES / SM4 software implementation<br>
 Project17：比较Firefox和谷歌的记住密码插件的实现区别<br>
 Project18: send a tx on Bitcoin testnet, and parse the tx data down to every bit, better write script yourself<br>
 Project21: Schnorr Bacth<br>
@@ -156,7 +156,40 @@ Merkle Tree的特别之处在于，这是一种自下而上建立的树，允许
 #### 实验结果
 ![MerkleTree运行结果](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/26875848-c5d4-4c4e-aaa4-0f389af1f8a6)
 
-### *Project10: report on the application of this deduce technique in Ethereum with ECDSA
+### Project9: AES / SM4 software implementation
+https://github.com/hsgroup30num1/homework-group-30/tree/dfaa5bf1dc4453cc40b8b363b5e68778c53fa051/project9
+
+#### 实验原理
+AES作为分组密码算法，分组长度为128bits，不同的密钥长度可满足不同的安全需求，根据常见密钥长度将其命名为“AES-128”、“AES-192”与“AES-256”。基本的算法构成包括加密算法、解密算法、密钥扩展算法。<br>
+
+加密方案<br>
+
+AES 加密算法共涉及 4 种操作：S盒（SubBytes）、行移位（ShiftRows）、列混合 （MixColumns）和轮密钥加（AddRoundKey）。<br>
+首先对明文与原始密钥进行依次异或操作，从而避免不用密钥即可完成逆过程的可能，保证算法的安全性。<br>
+然后进行10轮迭代加密，每一轮包括以下四个操作：字节代换，行移位，列混合，轮密钥加。注意最后一轮迭代不执行列混合操作。<br>
+
+解密方案<br>
+
+AES 解密算法的每一步分别对应加密算法的逆操作。加解密所有操作的顺序正好是相 反的，每轮的密钥分别由种子密钥经过密钥扩展算法得到。<br>
+首先对密文进行一次轮密钥加操作。<br>
+然后进行10轮迭代加密，每一轮顺序执行以下四个操作：逆行移位，逆字节代换，逆轮密钥加，逆列混合。注意最后一轮迭代不执行逆列混合操作。<br>
+
+密钥扩展方案<br>
+
+密钥扩展的复杂性是确保算法安全性的重要部分。AES-128的密钥扩展需将128bits的密钥扩展为11个轮密钥，即44个32bits密钥字。<br>
+AES首先将初始密钥写到4*4矩阵中，每一列为一个32bits字，依次记为W_0，W_1，W_2，W_3。然后对W数组进行扩充得到44列即44个32bits字。扩充算法如下：<br>
+对每个轮密钥的第一列W_i,由如下等式确定：W_i=W_{i-4}\bigoplusT（Wi-1），其中T函数由以下3部分构成：循环移位、字节代换、异或轮常量。W_{i-1}循环移位一个字节后经过S盒进行字节代换，得到的结果异或轮常数。<br>
+对每个轮密钥除第一列外的其余三列W_i,由如下等式确定：W_i=W_{i-4}\bigoplus W_{i-1}.<br>
+
+#### 运行指导
+硬件环境：AMD Ryzen 7 4800H with Radeon Graphics            2.90 GHz<br>
+软件环境：Visual Studio 2019<br>
+运行方式：直接运行文件“main.cpp”<br>
+
+#### 实验结果
+![AES](https://github.com/hsgroup30num1/homework-group-30/assets/129477640/c395dd8c-2505-4416-b11c-478413ea2b64)
+
+### Project10: report on the application of this deduce technique in Ethereum with ECDSA
 https://github.com/hsgroup30num1/homework-group-30/tree/e68182da6df575215c79e028ad0990cdf6808271/project10
 
 #### 实验思路
